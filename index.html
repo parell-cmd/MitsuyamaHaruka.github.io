@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debut VTuber Mitsuyama Haruka!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(45deg, #a851d4, #f8f8ff);
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .vtuber-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin: 20px 0;
+            object-fit: cover;
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: 0.5s all ease;
+        }
+
+        .start-button {
+            padding: 20px 40px;
+            font-size: 2em;
+            background: rgba(255, 255, 255, 0.2);
+            border: 3px solid white;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s all ease;
+            animation: pulse 2s infinite;
+        }
+
+        .start-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .volume-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .volume-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.2s;
+        }
+
+        .volume-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .firework-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff0000;
+            border-radius: 50%;
+            animation: rise 1.5s ease-out forwards;
+        }
+
+        .explosion {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        .gallery-container {
+            position: relative;
+            margin: 40px 0;
+            max-width: 1200px; /* Tambahkan ini */
+            width: 100%;
+        }
+
+
+        .gallery-wrapper {
+            scroll-snap-type: x mandatory;
+            scroll-padding: 0 20px;
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 20px 0;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory; 
+        }
+
+        .gallery-item {
+            scroll-snap-align: start; /* Diubah dari start ke center */
+            flex: 0 0 calc(100% - 40px); /* Sesuaikan dengan padding */
+            min-width: calc(100% - 40px); /* Untuk responsif */
+            margin: 0 20px; /* Tambahkan margin */
+            display: flex; /* Tambahkan ini */
+            justify-content: center; /* Pusatkan horizontal */
+            align-items: center; /* Pusatkan vertikal */
+            scroll-margin: 0 20px;
+        }
+
+        .video-item {
+            width: 100%;
+            max-width: 800px; /* Batasi ukuran maksimal */
+            aspect-ratio: 16/9; /* Pertahankan aspect ratio */
+        }
+
+        .video-cover::before {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+        }
+
+        .video-item video {
+            width: 100%;
+            height: auto; /* Ubah dari fixed height */
+            object-fit: contain; /* Ubah dari cover ke contain */
+            border-radius: 15px;
+        }
+
+        .gallery-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .video-item {
+            position: relative; /* Tambahkan ini */
+            overflow: hidden; /* Tambahkan ini */
+        }
+
+
+        .video-cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #ff69b4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 2;
+        }
+
+        .video-cover::before {
+            position: absolute;
+            top: 0; /* Tambahkan */
+            left: 0; /* Tambahkan */
+            width: 100%;
+            height: 100%;
+            content: "🎁";
+            font-size: 80px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px 20px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 3;
+            transition: 0.3s;
+            border: 2px solid white;
+            display: none;
+        }
+
+        .scroll-button:hover,
+        .bottom-nav-button:hover {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .scroll-button:hover {
+            background: rgba(0,0,0,0.8);
+            transform: scale(1.1);
+        }
+
+        .scroll-button.left {
+            left: 20px;
+        }
+
+        .scroll-button.right {
+            right: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .scroll-button {
+                display: flex; /* Tampilkan hanya di desktop */
+            }
+        }
+
+        /* Photo Gallery */
+        .photo-gallery .gallery-item {
+            width: 100%;
+            max-width: 400px; /* Sesuaikan dengan kebutuhan */
+            aspect-ratio: 3/4; /* Pertahankan rasio 3:4 (300px/400px) */
+            margin: 0 auto; /* Pusatkan */
+            display: flex;
+            justify-content: center;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Pastikan foto utuh terlihat */
+            border-radius: 15px;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .photo-item {
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 1; /* Untuk foto persegi */
+        }
+
+        .photo-gallery .video-cover {
+            display: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+     <!-- Start Screen -->
+     <div class="start-screen" id="startScreen">
+        <button class="start-button" onclick="startExperience()">Mulai Debut! ✨</button>
+    </div>
+
+     <!-- Volume Control -->
+     <div class="volume-controls">
+        <button class="volume-btn" onclick="adjustVolume(-0.1)">🔉</button>
+        <span id="volumeDisplay">100%</span>
+        <button class="volume-btn" onclick="adjustVolume(0.1)">🔊</button>
+    </div>
+
+    <!-- Soundtrack -->
+    <audio id="bgMusic" loop>
+        <source src="none.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="mainContent">
+        <header>
+            <h1>🎉 Selamat Debut Mitsuyama Haruka! 🎉</h1>
+            <img src="harukachi2.png" alt="VTuber Avatar" class="vtuber-img">
+        </header>
+
+        <div class="message-box">
+            <h2>💌 Pesan Untuk Mitsuyama Haruka</h2>
+            <p>Haloooo mengggg!! cie dah debut nih. maaf kalo jelek masih pemula ngerjain ini web cuma 39 jam 30 menit lebih 12 detik</p>
+            <p>"Selamat debut untuk si kucing putih DONGO yang lucu dan menggemaskan! 🐾✨</p>
+            <p>Semoga perjalananmu sebagai VTuber penuh kebahagiaan, tawa, dan dukungan dari semua yang</p>
+            <p>menyaksikan. Jadilah diri sendiri, karena keunikanmu justru yang akan membuat banyak orang tersenyum!</p>
+            <p>Kebetulan besok adalah hari istimewa, Halo aku Fareru sering dipanggil parel mengucapkan Selamat Hari Raya Idul Fitri 1446 H! 🌙</p>
+            <p>Mohon maaf lahir dan batin semoga hari ini membawa berkah, kebahagiaan, dan kedamaian untuk kita semua.</p>
+            <p>Double celebration: debutmu yang spesial dan kemenangan setelah bulan penuh perjuangan.</p>
+            <p>Tetap semangat, stay DONGO(tapi kurangin ya), dan selamat menyambut hari kemenangan dengan hati lapang!(hei orang tua mana THR yang kau janjikan itu) 💖🎮"</p>
+            <!-- Tambahkan lebih banyak konten teks jika perlu -->
+        </div>
+
+        <div class="gallery-container">
+            <button class="scroll-button left" onclick="scrollGallery('video', -1)">❮</button>
+            <div class="gallery-wrapper" id="videoGallery">
+                <div class="gallery-item"> <!-- Tambahkan gallery-item untuk video kedua -->
+                    <div class="video-item">
+                        <div class="video-cover" onclick="revealVideo(this)"></div>
+                        <video>
+                            <source src="swamiku.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <button class="scroll-button right" onclick="scrollGallery('video', 1)">❯</button>
+        </div>
+        <div class="gallery-container">
+            <button class="scroll-button left" onclick="scrollGallery('photo', -1)">❮</button>
+            <div class="gallery-wrapper" id="photoGallery">
+                <div class="gallery-item">
+                    <div class="photo-item">
+                        <img src="harukachi.jpg" alt="Photo 1">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="photo-item">
+                        <img src="harukachi2.png" alt="photo 2" class="photo-item">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="photo-item">
+                        <img src="harukachi3.png" alt="photo 3" class="photo-item">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="photo-item">
+                        <img src="harukachi4.jpg" alt="photo 4" class="photo-item">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="photo-item">
+                        <img src="harukachi5.jpg" alt="photo 5" class="photo-item">
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="photo-item">
+                        <img src="harukachi6.jpg" alt="photo 6" class="photo-item">
+                    </div>
+                </div>    
+            </div>
+            <button class="scroll-button right" onclick="scrollGallery('photo', 1)">❯</button>
+        </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Firework System yang Diperbaiki
+        let fireworkInterval;
+
+        function createFirework() {
+            const container = document.createElement('div');
+            container.className = 'firework-container';
+            
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            
+            // Posisi acak horizontal
+            const startX = Math.random() * window.innerWidth;
+            firework.style.left = `${startX}px`;
+            firework.style.bottom = '0';
+            
+            // Warna acak
+            const colors = ['#FF0000', '#00FF00', '#FFFF00', '#00FFFF', '#FF00FF'];
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            container.appendChild(firework);
+            document.body.appendChild(container);
+            
+            // Trigger ledakan setelah 1 detik
+            setTimeout(() => {
+                createExplosion(container, startX);
+            }, 1000);
+        }
+
+        function createExplosion(container, x) {
+            const particles = 30;
+            const colors = ['#FF0000', '#FFFF00', '#00FF00', '#00FFFF', '#FF00FF'];
+            const yPosition = window.innerHeight * 0.8;
+            
+            for(let i = 0; i < particles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'explosion';
+                
+                // Posisi
+                particle.style.left = `${x}px`;
+                particle.style.top = `${yPosition}px`;
+                
+                // Warna acak
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Animasi
+                const angle = (Math.PI * 2 * i) / particles;
+                const velocity = Math.random() * 5 + 3;
+                const dx = Math.cos(angle) * velocity;
+                const dy = Math.sin(angle) * velocity;
+                
+                particle.style.transform = `translate(${dx}px, ${dy}px)`;
+                container.appendChild(particle);
+                
+                // Hapus element setelah animasi
+                setTimeout(() => {
+                    container.remove();
+                }, 1000);
+            }
+        }
+
+
+        // Sistem Audio yang Diperbaiki
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 1;
+
+        function startExperience() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Memulai musik
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Autoplay blocked');
+                });
+            }
+            
+            // Firework interval
+            fireworkInterval = setInterval(createFirework, 1500);
+            
+            // Hentikan firework setelah 10 detik
+            setTimeout(() => clearInterval(fireworkInterval), 10000);
+            
+            // Animasi fade-in
+            const mainContent = document.getElementById('mainContent');
+            mainContent.style.opacity = '0';
+            let opacity = 0;
+            const fadeIn = setInterval(() => {
+                opacity += 0.05;
+                mainContent.style.opacity = opacity;
+                if(opacity >= 1) clearInterval(fadeIn);
+            }, 50);
+        }
+
+        // Inisialisasi Video
+        document.querySelectorAll('.video-item video').forEach(video => {
+            video.controls = false;
+            video.addEventListener('play', () => {
+                document.getElementById('bgMusic').pause();
+            });
+            
+            video.addEventListener('pause', () => {
+                document.getElementById('bgMusic').play();
+            });
+        });
+        function revealVideo(cover) {
+            // Pause semua video terlebih dahulu
+            document.querySelectorAll('.video-item video').forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+                video.controls = false;
+            });
+                cover.style.opacity = '0';
+                cover.style.pointerEvents = 'none';
+                const video = cover.nextElementSibling;
+                video.controls = true;
+                video.play();
+            }
+            function scrollGallery(type, direction) {
+                const gallery = document.getElementById(`${type}Gallery`);
+                const itemWidth = gallery.querySelector('.gallery-item').offsetWidth;
+                const gap = 20;
+                const scrollAmount = (itemWidth + gap) * direction;
+                
+                // Pause semua video sebelum scroll
+                document.querySelectorAll('video').forEach(video => {
+                    video.pause();
+                    video.currentTime = 0;
+                    video.controls = false;
+                });
+                
+                gallery.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+                
+                // Reset semua video cover
+                document.querySelectorAll('.video-cover').forEach(cover => {
+                    cover.style.opacity = '1';
+                    cover.style.pointerEvents = 'auto';
+                });
+            }
+
+
+        // Volume Control
+        function adjustVolume(change) {
+                bgMusic.volume = Math.min(Math.max(bgMusic.volume + change, 0), 1);
+                document.getElementById('volumeDisplay').textContent = 
+                    `${Math.round(bgMusic.volume * 100)}%`;
+                
+                const display = document.getElementById('volumeDisplay');
+                display.style.transform = 'scale(1.2)';
+                setTimeout(() => display.style.transform = 'scale(1)', 200);
+            }
+
+           
+               
+    </script>
+</body>
+</html>
