@@ -240,20 +240,20 @@
         }
 
         .gallery-item {
-            scroll-snap-align: start; /* Diubah dari start ke center */
-            flex: 0 0 calc(100% - 40px); /* Sesuaikan dengan padding */
-            min-width: calc(100% - 40px); /* Untuk responsif */
-            margin: 0 20px; /* Tambahkan margin */
-            display: flex; /* Tambahkan ini */
-            justify-content: center; /* Pusatkan horizontal */
-            align-items: center; /* Pusatkan vertikal */
+            scroll-snap-align: start; 
+            flex: 0 0 calc(100% - 40px); 
+            min-width: calc(100% - 40px); 
+            margin: 0 20px; 
+            display: flex; 
+            justify-content: center;
+            align-items: center; 
             scroll-margin: 0 20px;
         }
 
         .video-item {
             width: 100%;
-            max-width: 800px; /* Batasi ukuran maksimal */
-            aspect-ratio: 16/9; /* Pertahankan aspect ratio */
+            max-width: 800px; 
+            aspect-ratio: 16/9; 
         }
 
         .video-cover::before {
@@ -265,8 +265,8 @@
 
         .video-item video {
             width: 100%;
-            height: auto; /* Ubah dari fixed height */
-            object-fit: contain; /* Ubah dari cover ke contain */
+            height: auto; 
+            object-fit: contain; 
             border-radius: 15px;
         }
 
@@ -275,8 +275,8 @@
         }
 
         .video-item {
-            position: relative; /* Tambahkan ini */
-            overflow: hidden; /* Tambahkan ini */
+            position: relative; 
+            overflow: hidden; 
         }
 
 
@@ -295,8 +295,8 @@
 
         .video-cover::before {
             position: absolute;
-            top: 0; /* Tambahkan */
-            left: 0; /* Tambahkan */
+            top: 0; 
+            left: 0; 
             width: 100%;
             height: 100%;
             content: "🎁";
@@ -341,16 +341,16 @@
 
         @media (min-width: 768px) {
             .scroll-button {
-                display: flex; /* Tampilkan hanya di desktop */
+                display: flex; 
             }
         }
 
         /* Photo Gallery */
         .photo-gallery .gallery-item {
             width: 100%;
-            max-width: 400px; /* Sesuaikan dengan kebutuhan */
-            aspect-ratio: 3/4; /* Pertahankan rasio 3:4 (300px/400px) */
-            margin: 0 auto; /* Pusatkan */
+            max-width: 400px; 
+            aspect-ratio: 3/4; 
+            margin: 0 auto; 
             display: flex;
             justify-content: center;
         }
@@ -358,7 +358,7 @@
         .photo-item img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Pastikan foto utuh terlihat */
+            object-fit: contain; 
             border-radius: 15px;
         }
 
@@ -372,7 +372,7 @@
         .photo-item {
             width: 100%;
             max-width: 600px;
-            aspect-ratio: 1; /* Untuk foto persegi */
+            aspect-ratio: 1; 
         }
 
         .photo-gallery .video-cover {
@@ -388,19 +388,16 @@
     </style>
 </head>
 <body>
-     <!-- Start Screen -->
      <div class="start-screen" id="startScreen">
         <button class="start-button" onclick="startExperience()">Mulai Debut! ✨</button>
     </div>
 
-     <!-- Volume Control -->
      <div class="volume-controls">
         <button class="volume-btn" onclick="adjustVolume(-0.1)">🔉</button>
         <span id="volumeDisplay">100%</span>
         <button class="volume-btn" onclick="adjustVolume(0.1)">🔊</button>
     </div>
 
-    <!-- Soundtrack -->
     <audio id="bgMusic" loop>
         <source src="none.mp3" type="audio/mpeg">
     </audio>
@@ -421,13 +418,12 @@
             <p>Mohon maaf lahir dan batin semoga hari ini membawa berkah, kebahagiaan, dan kedamaian untuk kita semua.</p>
             <p>Double celebration: debutmu yang spesial dan kemenangan setelah bulan penuh perjuangan.</p>
             <p>Tetap semangat, stay DONGO(tapi kurangin ya), dan selamat menyambut hari kemenangan dengan hati lapang!(hei orang tua mana THR yang kau janjikan itu) 💖🎮"</p>
-            <!-- Tambahkan lebih banyak konten teks jika perlu -->
         </div>
 
         <div class="gallery-container">
             <button class="scroll-button left" onclick="scrollGallery('video', -1)">❮</button>
             <div class="gallery-wrapper" id="videoGallery">
-                <div class="gallery-item"> <!-- Tambahkan gallery-item untuk video kedua -->
+                <div class="gallery-item"> 
                     <div class="video-item">
                         <div class="video-cover" onclick="revealVideo(this)"></div>
                         <video>
@@ -479,7 +475,6 @@
     </div>
 
     <script>
-        // Firework System yang Diperbaiki
         let fireworkInterval;
 
         function createFirework() {
@@ -489,19 +484,16 @@
             const firework = document.createElement('div');
             firework.className = 'firework';
             
-            // Posisi acak horizontal
             const startX = Math.random() * window.innerWidth;
             firework.style.left = `${startX}px`;
             firework.style.bottom = '0';
             
-            // Warna acak
             const colors = ['#FF0000', '#00FF00', '#FFFF00', '#00FFFF', '#FF00FF'];
             firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
             
             container.appendChild(firework);
             document.body.appendChild(container);
             
-            // Trigger ledakan setelah 1 detik
             setTimeout(() => {
                 createExplosion(container, startX);
             }, 1000);
@@ -515,15 +507,12 @@
             for(let i = 0; i < particles; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'explosion';
-                
-                // Posisi
+               
                 particle.style.left = `${x}px`;
                 particle.style.top = `${yPosition}px`;
-                
-                // Warna acak
+               
                 particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 
-                // Animasi
                 const angle = (Math.PI * 2 * i) / particles;
                 const velocity = Math.random() * 5 + 3;
                 const dx = Math.cos(angle) * velocity;
@@ -532,7 +521,6 @@
                 particle.style.transform = `translate(${dx}px, ${dy}px)`;
                 container.appendChild(particle);
                 
-                // Hapus element setelah animasi
                 setTimeout(() => {
                     container.remove();
                 }, 1000);
@@ -540,7 +528,6 @@
         }
 
 
-        // Sistem Audio yang Diperbaiki
         const bgMusic = document.getElementById('bgMusic');
         bgMusic.volume = 1;
 
@@ -548,7 +535,6 @@
             document.getElementById('startScreen').classList.add('hidden');
             document.getElementById('mainContent').style.display = 'block';
             
-            // Memulai musik
             const playPromise = bgMusic.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
@@ -556,13 +542,10 @@
                 });
             }
             
-            // Firework interval
             fireworkInterval = setInterval(createFirework, 1500);
-            
-            // Hentikan firework setelah 10 detik
+           
             setTimeout(() => clearInterval(fireworkInterval), 10000);
             
-            // Animasi fade-in
             const mainContent = document.getElementById('mainContent');
             mainContent.style.opacity = '0';
             let opacity = 0;
@@ -573,7 +556,6 @@
             }, 50);
         }
 
-        // Inisialisasi Video
         document.querySelectorAll('.video-item video').forEach(video => {
             video.controls = false;
             video.addEventListener('play', () => {
@@ -585,7 +567,6 @@
             });
         });
         function revealVideo(cover) {
-            // Pause semua video terlebih dahulu
             document.querySelectorAll('.video-item video').forEach(video => {
                 video.pause();
                 video.currentTime = 0;
@@ -602,8 +583,7 @@
                 const itemWidth = gallery.querySelector('.gallery-item').offsetWidth;
                 const gap = 20;
                 const scrollAmount = (itemWidth + gap) * direction;
-                
-                // Pause semua video sebelum scroll
+               
                 document.querySelectorAll('video').forEach(video => {
                     video.pause();
                     video.currentTime = 0;
@@ -615,15 +595,12 @@
                     behavior: 'smooth'
                 });
                 
-                // Reset semua video cover
                 document.querySelectorAll('.video-cover').forEach(cover => {
                     cover.style.opacity = '1';
                     cover.style.pointerEvents = 'auto';
                 });
             }
 
-
-        // Volume Control
         function adjustVolume(change) {
                 bgMusic.volume = Math.min(Math.max(bgMusic.volume + change, 0), 1);
                 document.getElementById('volumeDisplay').textContent = 
